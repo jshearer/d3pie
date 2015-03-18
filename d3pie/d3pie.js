@@ -812,12 +812,18 @@ var labels = {
 			labelGroup.append("text")
 				.attr("id", function(d, i) { return pie.cssPrefix + "segmentMainLabel" + i + "-" + section; })
 				.attr("class", pie.cssPrefix + "segmentMainLabel-" + section)
-				.text(function(d) {
+				.selectAll("tspan")
+				.data(function(d) {
 					var str = d.label;
 					if (settings.truncation.enabled && d.label.length > settings.truncation.length) {
 						str = d.label.substring(0, settings.truncation.length) + "...";
 					}
-					return str;
+					return str.split("\n");
+				})
+				.enter()
+				.append("tspan")
+				.text(function(d) {
+					return d;
 				})
 				.style("font-size", settings.mainLabel.fontSize + "px")
 				.style("font-family", settings.mainLabel.font)
