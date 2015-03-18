@@ -1747,19 +1747,32 @@ var tt = {
     tooltips.selectAll("." + pie.cssPrefix + "tooltip")
       .data(pie.options.data.content)
       .append("text")
-        .attr("fill", function(d) { return pie.options.tooltips.styles.color; })
-        .style("font-size", function(d) { return pie.options.tooltips.styles.fontSize; })
-        .style("font-family", function(d) { return pie.options.tooltips.styles.font; })
-        .text(function(d, i) {
+        .selectAll("tspan")
+        .data(function(d) {
           var caption = pie.options.tooltips.string;
           if (pie.options.tooltips.type === "caption") {
             caption = d.caption;
           }
-          return tt.replacePlaceholders(pie, caption, i, {
-            label: d.label,
-            value: d.value,
-            percentage: segments.getPercentage(pie, i, pie.options.labels.percentage.decimalPlaces)
-          });
+          if(d.tooltip){
+            return d.tooltip.split('\n');
+          } else{
+            return tt.replacePlaceholders(pie, caption, i, {
+              label: d.label,
+              value: d.value,
+              percentage: segments.getPercentage(pie, i, pie.options.labels.percentage.decimalPlaces)
+            }).split('\n');
+          }
+        })
+        .enter()
+        .append("tspan")
+        .text(function(d) {
+          return d;
+        })
+        .attr("fill", function(d) { return pie.options.tooltips.styles.color; })
+        .style("font-size", function(d) { return pie.options.tooltips.styles.fontSize; })
+        .style("font-family", function(d) { return pie.options.tooltips.styles.font; })
+        .text(function(d, i) {
+          return d;
         });
 
 		tooltips.selectAll("." + pie.cssPrefix + "tooltip rect")
