@@ -45,7 +45,11 @@ var labels = {
 				})
 				.style("font-size", settings.mainLabel.fontSize + "px")
 				.style("font-family", settings.mainLabel.font)
-				.style("fill", settings.mainLabel.color);
+				.style("fill", settings.mainLabel.color)
+				.attr("x", 0)
+				.attr("dy", function(a,id){
+					return (id===0?0:20);
+				});
 		}
 
 		// 2. Add the percentage label
