@@ -51,6 +51,10 @@ var tt = {
         .style("font-family", function(d) { return pie.options.tooltips.styles.font; })
         .text(function(d, i) {
           return d;
+        })
+        .attr("x", 0)
+        .attr("dy", function(a,id){
+          return (id===0?0:20);
         });
 
     tooltips.selectAll("." + pie.cssPrefix + "tooltip rect")
