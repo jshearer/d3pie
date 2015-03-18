@@ -1791,7 +1791,7 @@ var tt = {
         },
         y: function (d, i) {
           var dims = helpers.getDimensions(pie.cssPrefix + "tooltip" + i);
-          return 1;
+          return -9;
         }
       });
   },
